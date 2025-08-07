@@ -83,6 +83,14 @@ void viewHistory() {
     fclose(history);
 }
 
+void deleteBuku() {
+    printf("Delete Buku");
+}
+
+void deleteHistory() {
+    printf("Delete History");
+}
+
 int main() {
     int pilihan;
 
@@ -93,8 +101,10 @@ int main() {
         printf("1. Input Buku\n");
         printf("2. View History\n");
         printf("3. View Buku\n");
-        printf("4. Keluar\n");
-        printf("Pilih (1/2/3/4): ");
+        printf("4. Delete Buku\n");
+        printf("5. Delete History\n");
+        printf("6. Keluar\n");
+        printf("Pilih No: ");
         scanf("%d", &pilihan);
 
         if (pilihan == 1) {
@@ -104,6 +114,10 @@ int main() {
         } else if (pilihan == 3) {
             viewBuku();
         } else if (pilihan == 4) {
+            deleteBuku();
+        } else if (pilihan == 5) {
+            deleteHistory();
+        } else if (pilihan == 6) {
             break;
         } else {
             printf("Pilihan tidak valid.\n");
