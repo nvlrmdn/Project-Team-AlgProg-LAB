@@ -10,6 +10,9 @@ int jumlah = 0;
 
 void loadData() {
     FILE *fp = fopen("databuku.txt", "r");
+    if (fp == NULL) {
+        return;
+    }
 
     while (fscanf(fp, "%[^,],%[^,],%[^,],%d\n",
                   kode[jumlah],
@@ -32,35 +35,52 @@ void viewBuku() {
 
 void inputBuku() {
     FILE *fp = fopen("databuku.txt", "a");
+    FILE *history = fopen("history.txt", "a");
+
+    printf("\n Input Buku Baru \n");
 
     printf("Masukkan Kode Buku: ");
     scanf("%s", kode[jumlah]);
+
     printf("Masukkan Nama Buku: ");
     scanf(" %[^\n]", nama[jumlah]);
+
     printf("Masukkan Jenis Buku: ");
     scanf(" %[^\n]", jenis[jumlah]);
+
     printf("Masukkan Harga Buku: ");
     scanf("%d", &harga[jumlah]);
 
     fprintf(fp, "%s,%s,%s,%d\n",
             kode[jumlah], nama[jumlah], jenis[jumlah], harga[jumlah]);
 
+    fprintf(history, "Buku: %s | Jenis: %s | Harga: %d\n",
+            nama[jumlah], jenis[jumlah], harga[jumlah]);
+
     fclose(fp);
+    fclose(history);
 
     jumlah++;
     printf("Buku Berhasil Ditambahkan\n");
 }
 
 void viewHistory() {
+    FILE *history = fopen("history.txt", "r");
+
     printf("\n History Penjualan \n");
-    if (jumlah == 0) {
-        printf("Belum ada Buku.\n");
-    } else {
-        for (int i = 0; i < jumlah; i++) {
-            printf("%d. Buku: %s | Jenis: %s | Harga: %d\n",
-                   i + 1, nama[i], jenis[i], harga[i]);
-        }
+
+    if (history == NULL) {
+        printf("Belum ada history penjualan.\n");
+        return;
     }
+
+    char line[256];
+    int i = 1;
+    while (fgets(line, sizeof(line), history)) {
+        printf("%d. %s", i++, line);
+    }
+
+    fclose(history);
 }
 
 int main() {
