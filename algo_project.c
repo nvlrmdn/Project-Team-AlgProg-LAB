@@ -84,11 +84,57 @@ void viewHistory() {
 }
 
 void deleteBuku() {
-    printf("Delete Buku");
+    viewBuku();
+    int idx;
+    printf("Masukkan index buku yang ingin dihapus: ");
+    scanf("%d", &idx);
+    if (idx < 1 || idx > jumlah) {
+        printf("Index invalid: masukkan index yang valid");
+    }
+
+    int found = 0;
+    for (int i = 0; i < jumlah; i++) {
+        int num = atoi(kode[i]);
+        if (num == idx) {
+            for (int j = i; j < jumlah - 1; j++) {
+                strcpy(kode[j], kode[j + 1]);
+                strcpy(nama[j], nama[j + 1]);
+                strcpy(jenis[j], jenis[j + 1]);
+                harga[j] = harga[j + 1];
+            }
+            jumlah--;
+            found = 1;
+            printf("Data index %d Successfully delete.\n", idx);
+            return;
+        }
+    }
+
+    if (!found)
+        printf("Data tidak ditemukan.\n");
 }
 
+
 void deleteHistory() {
-    printf("Delete History");
+    viewHistory();  
+    int idx;
+    printf("Masukkan index history yang ingin dihapus: ");
+    scanf("%d", &idx);
+
+    if (idx < 1 || idx > jumlah) {
+        printf("Index invalid: masukkan index yang valid\n");
+        return;
+    }
+
+    for (int i = idx - 1; i < jumlah - 1; i++) {
+        strcpy(kode[i], kode[i + 1]);
+        strcpy(nama[i], nama[i + 1]);
+        strcpy(jenis[i], jenis[i + 1]);
+        harga[i] = harga[i + 1];
+    }
+
+    jumlah--;
+
+    printf("Data history index %d berhasil dihapus.\n",idx);
 }
 
 int main() {
